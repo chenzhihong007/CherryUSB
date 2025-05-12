@@ -137,6 +137,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../version.html">版本说明</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">性能展示</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../show/index.html">性能展示</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">商业支持</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../support/index.html">商业支持</a></li>
@@ -231,7 +235,7 @@
 <ul class="simple">
 <li><p>F103 使用 fsdev ip</p></li>
 <li><p>F429 主从使用 USB1, 引脚 pb14/pb15, 并且都使用 dma 模式</p></li>
-<li><p>H7 设备使用 USB0, 引脚 pa11/pa12，主机使用 USB_OTG_HS ,引脚 pb14/pb15，并且需要做 nocache 处理</p></li>
+<li><p>H7 设备使用 USB0, 引脚 pa11/pa12，没有开DMA 模式。主机使用 USB1 ,引脚 pb14/pb15，并且需要做 nocache 处理</p></li>
 </ul>
 <p>demo 底下提供了 <strong>stm32xxx.ioc</strong> 文件，双击打开，点击 <strong>Generate Code</strong> 即可。</p>
 <div class="admonition caution">
@@ -301,7 +305,7 @@
 <img alt="../_images/stm32_5.png" src="../_images/stm32_5.png" />
 </figure>
 <ul class="simple">
-<li><p>添加 CherryUSB 必须要的源码（ <strong>usbd_core.c</strong> 、 <strong>usb_dc_dwc2.c</strong> 或者是 <strong>usb_dc_fsdev.c</strong>  ）,以及想要使用的 class 驱动，可以将对应的 class template 添加方便测试。</p></li>
+<li><p>添加 CherryUSB 必须要的源码（ <strong>usbd_core.c</strong> 、 <strong>dwc2/usb_dc_dwc2.c</strong> 或者是 <strong>fsdev/usb_dc_fsdev.c</strong>  ）,以及想要使用的 class 驱动，可以将对应的 class template 添加方便测试。</p></li>
 </ul>
 <figure class="align-default">
 <img alt="../_images/stm32_6.png" src="../_images/stm32_6.png" />
@@ -319,7 +323,7 @@
 <img alt="../_images/stm32_8.png" src="../_images/stm32_8.png" />
 </figure>
 <ul class="simple">
-<li><p>如果使用 dwc2 ip，需要增加 <strong>usb_glue_st.c</strong> 文件，并在 <cite>usb_config.h</cite> 中实现以下宏：</p></li>
+<li><p>如果使用 dwc2 ip，需要增加 <strong>dwc2/usb_glue_st.c</strong> 文件，并在 <cite>usb_config.h</cite> 中实现以下宏：</p></li>
 </ul>
 <div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="c1">// 以下细节如有出入，请对照 stm32xxx.h 文件修改</span>
 <span class="c1">// 需要根据硬件实际的 fifo 深度进行修改，默认是最基础的配置</span>
@@ -334,7 +338,7 @@
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>如果使用 fsdev ip，在 <cite>usb_config.h</cite> 中实现以下宏：</p></li>
+<li><p>如果使用 fsdev ip，（V1.4.4 开始需要增加 <strong>fsdev/usb_glue_st.c</strong>） 在 <cite>usb_config.h</cite> 中实现以下宏：</p></li>
 </ul>
 <div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#define CONFIG_USBDEV_EP_NUM 8</span>
 <span class="cp">#define CONFIG_USBDEV_FSDEV_PMA_ACCESS 2</span>
@@ -349,6 +353,10 @@
 <figure class="align-default">
 <img alt="../_images/stm32_11.png" src="../_images/stm32_11.png" />
 </figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>以下两个步骤从 V1.4.4 开始不再需要，<strong>fsdev/usb_glue_st.c</strong>, <strong>dwc2/usb_glue_st.c</strong> 文件中已经实现</p>
+</div>
 <ul class="simple">
 <li><p>拷贝 <strong>xxx_msp.c</strong> 中的 <strong>HAL_PCD_MspInit</strong> 函数中的内容到 <strong>usb_dc_low_level_init</strong> 函数中，屏蔽 st 生成的 usb 初始化</p></li>
 </ul>
@@ -400,6 +408,10 @@
 <span class="cp">#define CONFIG_USB_DWC2_PTX_FIFO_SIZE (1024 / 4)</span>
 <span class="cp">#define CONFIG_USB_DWC2_RX_FIFO_SIZE ((1012 - CONFIG_USB_DWC2_NPTX_FIFO_SIZE - CONFIG_USB_DWC2_PTX_FIFO_SIZE) / 4)</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>以下两个步骤从 V1.4.4 开始不再需要，<strong>fsdev/usb_glue_st.c</strong>, <strong>dwc2/usb_glue_st.c</strong> 文件中已经实现</p>
 </div>
 <ul class="simple">
 <li><p>拷贝 <strong>xxx_msp.c</strong> 中的 <cite>HAL_HCD_MspInit</cite> 函数中的内容到 <cite>usb_hc_low_level_init</cite> 函数中，屏蔽 st 生成的 usb 初始化</p></li>
