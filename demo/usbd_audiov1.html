@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>usbd_audiov1 &mdash; CherryUSB 1.4.3 documentation</title>
+  <title>usbd_audiov1 &mdash; CherryUSB 1.5.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=a68a9277"></script>
+      <script src="../_static/documentation_options.js?v=73275c37"></script>
       <script src="../_static/doctools.js?v=9a2dae69"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
@@ -90,6 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="usbd_video.html">usbd_video</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usbd_winusb.html">usbd_winusb</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usbd_webusb.html">usbd_webusb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_adb.html">usbd_adb</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usbh_serial.html">usbh_serial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usbh_hid.html">usbh_hid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usbh_msc.html">usbh_msc</a></li>
@@ -158,6 +159,10 @@
              
   <section id="usbd-audiov1">
 <h1>usbd_audiov1<a class="headerlink" href="#usbd-audiov1" title="Link to this heading"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在使用windows 时，当修改描述符任意参数时，必须同步修改字符串描述符，并且卸载驱动，否则windows会认为设备未更改，继续使用旧的驱动，导致无法识别设备。Linux 不受此限制。</p>
+</div>
 </section>
 
 
@@ -171,7 +176,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 ~ 2024, sakumisu.</p>
+    <p>&#169; Copyright 2022 ~ 2025, sakumisu.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
